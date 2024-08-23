@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Estacionamiento</title> 
+    <style>
+        body {
+            background-color: #87CEEB; 
+            text-align: center; 
+        }
+        label, input, button {
+            display: block;
+            margin: 1px auto;
+            border: 2px solid #000;
+            padding: 15px;
+            margin-top: 20px;
+            width: fit-content;
+            background-color: hsl(0, 0%, 100%);
+            border-radius: 10px; 
+            transition: transform 0.3s; 
+        }
+        input, button {
+            padding: 5px;
+        }
+        label:hover, input:hover, button:hover {
+            transform: scale(1.1); 
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px dashed #000; /* Borde de ticket */
+            padding: 20px;
+            background-color: #fff;
+            display: inline-block;
+            text-align: left;
+        }
+
+        h1 {
+            border: 10px solid #000;
+            background-color: #8ceb87; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Estacionamiento</h1>
+    <label for="hours">Horas:</label>
+    <input type="number" id="hours" name="hours" min="0"><br><br>
+    <label for="minutes">Minutos:</label>
+    <input type="number" id="minutes" name="minutes" min="0" max="59"><br><br>
+    <label for="isSunday">¿Es domingo?</label>
+    <input type="checkbox" id="isSunday" name="isSunday"><br><br>
+    <button onclick="calculateParkingFee()">Calcular</button>
+    <p id="result"></p>
+
+    <script>
+        function calculateParkingFee() {
+            const hours = parseInt(document.getElementById('hours').value);
+            const minutes = parseInt(document.getElementById('minutes').value);
+            const isSunday = document.getElementById('isSunday').checked;
+
+            let totalMinutes = hours * 60 + minutes;
+            let fee = 0;
+
+            if (totalMinutes <= 10) {
+                fee = 0;
+            } else if (totalMinutes <= 25) {
+                fee = 3;
+            } else if (totalMinutes <= 60) {
+                fee = 10;
+            } else {
+                fee = 10 + Math.ceil((totalMinutes - 60) / 60) * 5;
+            }
+
+            if (isSunday) {
+                fee *= 0.9;
+            }
+
+            const dayType = isSunday ? "Domingo" : "Otro día";
+            document.getElementById('result').innerText = `Horas: ${hours}\nMinutos: ${minutes}\nDía: ${dayType}\nTotal a pagar: $${fee.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
