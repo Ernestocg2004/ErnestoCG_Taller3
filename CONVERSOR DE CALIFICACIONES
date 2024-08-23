@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Calificaciones</title>
+    <style>
+        body {
+            background-color: #b3e5fc;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            border: 2px solid #000;
+            background-color: #127c8c;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        label {
+            display: inline-block;
+            border: 2px solid #000;
+            width: 100px;
+            background-color: #4f8c12;
+        }
+        input {
+            width: 50px;
+        }
+        button {
+            margin-top: 20px;
+            border: 2px solid #000;
+            background-color: #07245f;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor de Calificaciones</h1>
+    <div class="input-group">
+        <label for="student1">Estudiante 1:</label>
+        <input type="number" id="student1" name="student1" min="0" max="100">
+    </div>
+    <div class="input-group">
+        <label for="student2">Estudiante 2:</label>
+        <input type="number" id="student2" name="student2" min="0" max="100">
+    </div>
+    <div class="input-group">
+        <label for="student3">Estudiante 3:</label>
+        <input type="number" id="student3" name="student3" min="0" max="100">
+    </div>
+    <button onclick="convertGrades()">Convertir</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        function convertGrades() {
+            const grades = [
+                parseInt(document.getElementById('student1').value),
+                parseInt(document.getElementById('student2').value),
+                parseInt(document.getElementById('student3').value)
+            ];
+
+            const gradeLetters = grades.map(grade => {
+                if (grade > 100) return 'error no se puede pasar de 100 puntos';
+                if (grade >= 90) return 'A';
+                if (grade >= 80) return 'B';
+                if (grade >= 70) return 'C';
+                if (grade >= 69) return 'D';
+                if (grade <69)   return 'F';
+            });
+
+            document.getElementById('result').innerText = `
+                Estudiante 1: ${gradeLetters[0]}
+                Estudiante 2: ${gradeLetters[1]}
+                Estudiante 3: ${gradeLetters[2]}
+            `;
+        }
+    </script>
+</body>
+</html>
